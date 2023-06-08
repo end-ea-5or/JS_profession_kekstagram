@@ -1,4 +1,8 @@
-import { getRandomIntFromRange, createArray, shuffle } from './utils.js';
+import {
+  getRandomIntFromRange,
+  createArray,
+  createRandomIdFromRangeGenerator,
+} from './utils.js';
 
 const ITEMS_NUMBER = 25;
 const MIN_LIKES_NUMBER = 15;
@@ -31,22 +35,18 @@ const MESSAGE_EXAMPLES = [
   'Лица у людей на фотке перекошены, как будто их избивают. Как можно было поймать такой неудачный момент?!'
 ];
 
-// Создаем перемешанный массив неповторяющихся id от 1 до ITEMS_NUMBER
-const shuffledIdArray = createArray(ITEMS_NUMBER, (elem, index) => (elem += index));
-shuffle(shuffledIdArray);
-// Создаем перемешанный массив неповторяющихся id комментариев от 1 до MAX_COMMENT_ID_NUMBER
-const shuffledIdCommentArray = createArray(MAX_COMMENT_ID_NUMBER, (elem, index) => (elem += index));
-shuffle(shuffledIdCommentArray);
+const uniqueIdItem = createRandomIdFromRangeGenerator(1, ITEMS_NUMBER);
+const uniqueIdComment = createRandomIdFromRangeGenerator(1, MAX_COMMENT_ID_NUMBER);
 
-const createComment = (i) => ({
-  id: shuffledIdCommentArray[i],
+const createComment = () => ({
+  id: uniqueIdComment(),
   avatar: `img/avatar-${getRandomIntFromRange(1, AVATARS_NUMBER)}.svg`,
   message: MESSAGE_EXAMPLES[getRandomIntFromRange(0, MESSAGE_EXAMPLES.length - 1)],
   name: NAMES_EXAMPLES[getRandomIntFromRange(0, NAMES_EXAMPLES.length - 1)],
 });
 
-const createPhotoDescription = (i) => ({
-  id: shuffledIdArray[i],
+const createPhotoDescription = () => ({
+  id: uniqueIdItem(),
   url: `photos/${getRandomIntFromRange(0, ITEMS_NUMBER)}.jpg`,
   description: DESCRIPTIONS_EXAMPLES[getRandomIntFromRange(0, DESCRIPTIONS_EXAMPLES.length - 1)],
   likes: getRandomIntFromRange(MIN_LIKES_NUMBER, MAX_LIKES_NUMBER),

@@ -26,7 +26,26 @@ const createArray = (length, func) => {
   return arr;
 };
 
+
+// Функция, генерирующая уникальные (неповторяющиеся) id в заданном диапазоне
+// используется замыкание
+const createRandomIdFromRangeGenerator = (min, max) => {
+  const prevArr = [];
+  return () => {
+    let currentVal = getRandomIntFromRange(min, max);
+    if (prevArr.length >= (max - min + 1)) {
+      return null;
+    }
+    while (prevArr.includes(currentVal)) {
+      currentVal = getRandomIntFromRange(min, max);
+    }
+    prevArr.push(currentVal);
+    return currentVal;
+  };
+};
+
 export {
+  createRandomIdFromRangeGenerator,
   getRandomIntFromRange,
   isStringLengthMatches,
   createArray,
