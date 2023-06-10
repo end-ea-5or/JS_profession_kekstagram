@@ -37,6 +37,7 @@ const MESSAGE_EXAMPLES = [
 
 const uniqueIdItem = createRandomIdFromRangeGenerator(1, ITEMS_NUMBER);
 const uniqueIdComment = createRandomIdFromRangeGenerator(1, MAX_COMMENT_ID_NUMBER);
+const uniquePhotosUrl = createRandomIdFromRangeGenerator(1, ITEMS_NUMBER);
 
 const createComment = () => ({
   id: uniqueIdComment(),
@@ -47,7 +48,7 @@ const createComment = () => ({
 
 const createPhotoDescription = () => ({
   id: uniqueIdItem(),
-  url: `photos/${getRandomIntFromRange(0, ITEMS_NUMBER)}.jpg`,
+  url: `photos/${uniquePhotosUrl()}.jpg`,
   description: DESCRIPTIONS_EXAMPLES[getRandomIntFromRange(0, DESCRIPTIONS_EXAMPLES.length - 1)],
   likes: getRandomIntFromRange(MIN_LIKES_NUMBER, MAX_LIKES_NUMBER),
   comments: createArray(getRandomIntFromRange(1, MAX_COMMENTS_NUMBER), (elem, index) => createComment(index)),
